@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    {% if success %}
+                    <div class="text-success mb-3">
+                        <i class="fas fa-check-circle fa-3x"></i>
+                    </div>
+                    <h3 class="text-success">Успех!</h3>
+                    {% else %}
+                    <div class="text-danger mb-3">
+                        <i class="fas fa-exclamation-circle fa-3x"></i>
+                    </div>
+                    <h3 class="text-danger">Ошибка</h3>
+                    {% endif %}
+                    
+                    <p class="mb-4">{{ message }}</p>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'register' %}" class="btn btn-primary me-2">
+                            <i class="fas fa-user-plus me-2"></i>Тест регистрации
+                        </a>
+                        <a href="/" class="btn btn-outline-secondary">
+                            <i class="fas fa-home me-2"></i>На главную
+                        </a>
+                    </div>
+                    
+                    {% if success %}
+                    <div class="mt-4 p-3 bg-light rounded">
+                        <h5>Что проверять:</h5>
+                        <ul class="list-unstyled text-start">
+                            <li>✅ Открыть консоль сервера Django</li>
+                            <li>✅ Найти раздел с email</li>
+                            <li>✅ Проверить содержимое письма</li>
+                            <li>✅ Убедиться в корректности HTML</li>
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

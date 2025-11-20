@@ -1,0 +1,122 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+СОЗДАНИЕ ФАЙЛОВ С ПРАВИЛЬНОЙ КОДИРОВКОЙ
+"""
+
+import os
+
+# Содержимое файла ultra_manager.py
+ultra_manager_content = '''#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+УЛЬТРА-НАДЕЖНЫЙ МЕНЕДЖЕР ДАННЫХ
+"""
+
+import os
+import sys
+import django
+from pathlib import Path
+
+# Настройка
+BASE_DIR = Path(__file__).parent
+sys.path.insert(0, str(BASE_DIR))
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
+
+print("🚀 УЛЬТРА-НАДЕЖНЫЙ МЕНЕДЖЕР ДАННЫХ")
+print("=" * 50)
+
+try:
+    django.setup()
+    print("✅ Django настроен успешно!")
+    
+    from catalog.models import Category, Product
+    
+    # Создаем тестовые данные
+    if Category.objects.count() == 0:
+        category = Category.objects.create(
+            name="Мебель для гостиной",
+            description="Диваны, кресла, журнальные столики"
+        )
+        print(f"✅ Создана категория: {category.name}")
+    
+    if Product.objects.count() == 0:
+        category = Category.objects.first()
+        product = Product.objects.create(
+            name="Комфортный диван",
+            category=category,
+            price=25000.00,
+            description="Мягкий диван для гостиной",
+            stock=5
+        )
+        print(f"✅ Создан товар: {product.name} - {product.price} руб.")
+    
+    # Статистика
+    print(f"📊 Категории: {Category.objects.count()}")
+    print(f"📦 Товары: {Product.objects.count()}")
+    print("✅ Синхронизация завершена!")
+    
+except Exception as e:
+    print(f"❌ Ошибка: {e}")
+'''
+
+# Содержимое файла working_manager.py
+working_manager_content = '''#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+РАБОТАЮЩИЙ МЕНЕДЖЕР ДАННЫХ
+"""
+
+import os
+import sys
+from pathlib import Path
+
+# Настройка Django
+BASE_DIR = Path(__file__).parent
+sys.path.insert(0, str(BASE_DIR))
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
+
+import django
+django.setup()
+
+from catalog.models import Category, Product
+
+print("🔄 РАБОТАЮЩИЙ МЕНЕДЖЕР ДАННЫХ")
+print("=" * 40)
+
+# Создаем тестовые данные
+if Category.objects.count() == 0:
+    category = Category.objects.create(
+        name="Мебель для гостиной",
+        description="Диваны, кресла, журнальные столики"
+    )
+    print(f"✅ Создана категория: {category.name}")
+
+if Product.objects.count() == 0:
+    category = Category.objects.first()
+    product = Product.objects.create(
+        name="Комфортный диван",
+        category=category,
+        price=25000.00,
+        description="Мягкий диван для гостиной",
+        stock=5
+    )
+    print(f"✅ Создан товар: {product.name} - {product.price} руб.")
+
+# Статистика
+print(f"📊 Категории: {Category.objects.count()}")
+print(f"📦 Товары: {Product.objects.count()}")
+print("✅ ВЫПОЛНЕНИЕ ЗАВЕРШЕНО!")
+'''
+
+# Сохраняем файлы
+with open('ultra_manager.py', 'w', encoding='utf-8') as f:
+    f.write(ultra_manager_content)
+
+with open('working_manager.py', 'w', encoding='utf-8') as f:
+    f.write(working_manager_content)
+
+print("✅ Файлы созданы с правильной кодировкой UTF-8!")
+print("📁 Созданы файлы:")
+print("   • ultra_manager.py")
+print("   • working_manager.py")

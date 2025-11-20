@@ -1,0 +1,504 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center">
+                <!-- Заголовок без анимации для надежности -->
+                <h1 class="hero-title mb-4">🛋️ Преобразите свой дом</h1>
+                
+                <!-- Подзаголовок -->
+                <p class="hero-subtitle mb-5" id="typewriter-subtitle"></p>
+                
+                <!-- Кнопка -->
+                <a href="/catalog/" class="btn btn-warning btn-hero">
+                    СМОТРЕТЬ КАТАЛОГ
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Анимированные элементы фона -->
+    <div class="floating-elements">
+        <div class="floating-element">🛋️</div>
+        <div class="floating-element">🛏️</div>
+        <div class="floating-element">💺</div>
+        <div class="floating-element">📺</div>
+    </div>
+</section>
+
+<style>
+.hero-section {
+    background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+    background-size: 300% 300%;
+    color: white;
+    padding: 100px 0 80px;
+    position: relative;
+    overflow: hidden;
+    animation: gradientShift 15s ease infinite;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+}
+
+/* Анимация градиента */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Заголовки */
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    opacity: 0;
+    animation: fadeIn 1s ease-out 0.5s forwards;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    font-weight: 300;
+    opacity: 0.9;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+}
+
+/* Эффект печатающегося текста только для подзаголовка */
+#typewriter-subtitle {
+    overflow: hidden;
+    border-right: 2px solid rgba(255,255,255,0.6);
+    white-space: nowrap;
+    margin: 0 auto;
+    display: inline-block;
+    opacity: 1;
+    animation: 
+        typing-subtitle 2.5s steps(50, end) 1.5s forwards,
+        blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing-subtitle {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: rgba(255,255,255,0.6) }
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* Кнопка */
+.btn-hero {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease-out 4s forwards;
+    background: linear-gradient(45deg, #ffd700, #ffa500);
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 20px rgba(255, 165, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-hero:hover {
+    background: linear-gradient(45deg, #ffa500, #ff8c00);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(255, 165, 0, 0.4);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Плавающие элементы */
+.floating-elements {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.floating-element {
+    position: absolute;
+    font-size: 30px;
+    opacity: 0;
+    animation: floatElement 15s linear infinite;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+}
+
+.floating-element:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+.floating-element:nth-child(2) { top: 60%; right: 15%; animation-delay: 2s; }
+.floating-element:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 4s; }
+.floating-element:nth-child(4) { bottom: 70%; right: 10%; animation-delay: 6s; }
+
+@keyframes floatElement {
+    0% { 
+        transform: translateY(0px) rotate(0deg) scale(0.8); 
+        opacity: 0; 
+    }
+    20% { 
+        transform: translateY(-30px) rotate(180deg) scale(1); 
+        opacity: 0.4; 
+    }
+    80% { 
+        transform: translateY(-20px) rotate(360deg) scale(1); 
+        opacity: 0.4; 
+    }
+    100% { 
+        transform: translateY(0px) rotate(450deg) scale(0.8); 
+        opacity: 0; 
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 100px 0 60px;
+        min-height: 70vh;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+        white-space: normal;
+        border-right: none;
+        animation: none !important;
+        opacity: 1 !important;
+        width: 100% !important;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const subtitleText = "Мебель и техника по доступным ценам. Более 5000 товаров в наличии!";
+    
+    // Анимация только подзаголовка
+    setTimeout(() => {
+        typeWriter('typewriter-subtitle', subtitleText, 40);
+    }, 1500);
+    
+    function typeWriter(elementId, text, speed) {
+        const element = document.getElementById(elementId);
+        let i = 0;
+        
+        function type() {
+            if (i < text.length) {
+                element.innerHTML = text.substring(0, i + 1);
+                i++;
+                setTimeout(type, speed);
+            } else {
+                setTimeout(() => {
+                    element.style.borderRight = 'none';
+                }, 1000);
+            }
+        }
+        type();
+    }
+});
+</script>
+
+    <!-- Преимущества -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <div class="fs-1 mb-3">🚚</div>
+                        <h5>Бесплатная доставка</h5>
+                        <p class="text-muted">При заказе от 10 000 ₽</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <div class="fs-1 mb-3">🛡️</div>
+                        <h5>Гарантия 2 года</h5>
+                        <p class="text-muted">На всю мебель и технику</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <div class="fs-1 mb-3">💳</div>
+                        <h5>Рассрочка 0%</h5>
+                        <p class="text-muted">До 12 месяцев</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <div class="fs-1 mb-3">🎁</div>
+                        <h5>Подарки</h5>
+                        <p class="text-muted">К каждому заказу</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Популярные категории -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5 fw-bold">🔥 Популярные категории</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card category-card text-white">
+                        <img src="https://via.placeholder.com/400x250/4A90E2/FFFFFF?text=Диваны" class="card-img" alt="Диваны">
+                        <div class="card-img-overlay d-flex align-items-end">
+                            <div>
+                                <h4 class="card-title">Диваны</h4>
+                                <p class="card-text">От 15 990 ₽</p>
+                                <span class="discount-badge">-25%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card category-card text-white">
+                        <img src="https://via.placeholder.com/400x250/50E3C2/FFFFFF?text=Спальни" class="card-img" alt="Спальни">
+                        <div class="card-img-overlay d-flex align-items-end">
+                            <div>
+                                <h4 class="card-title">Спальни</h4>
+                                <p class="card-text">От 25 990 ₽</p>
+                                <span class="discount-badge">-30%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card category-card text-white">
+                        <img src="https://via.placeholder.com/400x250/B8E986/FFFFFF?text=Кухни" class="card-img" alt="Кухни">
+                        <div class="card-img-overlay d-flex align-items-end">
+                            <div>
+                                <h4 class="card-title">Кухни</h4>
+                                <p class="card-text">От 35 990 ₽</p>
+                                <span class="discount-badge">-20%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Хиты продаж -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5 fw-bold">⭐ Хиты продаж</h2>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <div class="fs-1 mb-3">🛏️</div>
+                            <h5>Кровать "Империя"</h5>
+                            <p class="text-success fw-bold">45 990 ₽</p>
+                            <p class="text-muted small">Двуспальная с подъемным механизмом</p>
+                            <button class="btn btn-primary w-100">В КОРЗИНУ</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <div class="fs-1 mb-3">🛋️</div>
+                            <h5>Диван "Модерн"</h5>
+                            <p class="text-success fw-bold">29 990 ₽</p>
+                            <p class="text-muted small">Угловой, раскладной</p>
+                            <button class="btn btn-primary w-100">В КОРЗИНУ</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <div class="fs-1 mb-3">📺</div>
+                            <h5>ТВ-тумба "Гламур"</h5>
+                            <p class="text-success fw-bold">15 990 ₽</p>
+                            <p class="text-muted small">С LED подсветкой</p>
+                            <button class="btn btn-primary w-100">В КОРЗИНУ</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <div class="fs-1 mb-3">💺</div>
+                            <h5>Кресло "Босс"</h5>
+                            <p class="text-success fw-bold">12 990 ₽</p>
+                            <p class="text-muted small">Офисное, эргономичное</p>
+                            <button class="btn btn-primary w-100">В КОРЗИНУ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🔥 БЛОГ СТАТЬИ -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5 fw-bold">📝 Полезные статьи</h2>
+            <div class="row g-4">
+                {% for article in latest_articles %}
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ article.title }}</h5>
+                            <p class="card-text">{{ article.excerpt|default:article.content|truncatewords:20 }}</p>
+                            <a href="{% url 'blog:article_detail' article.slug %}" class="btn btn-outline-primary">Читать далее</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-warning">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-3">🎉 Скидка 15% на первый заказ!</h2>
+            <p class="lead mb-4">Зарегистрируйтесь и получите персональную скидку</p>
+            <a href="/accounts/register/" class="btn btn-dark btn-lg px-5">ПОЛУЧИТЬ СКИДКУ</a>
+        </div>
+    </section>
+
+    <!-- Отзывы -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5 fw-bold">💬 Отзывы покупателей</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="text-warning mb-3">⭐⭐⭐⭐⭐</div>
+                            <p>"Заказывали кухню, все привезли вовремя, собрали качественно. Очень довольны!"</p>
+                            <footer class="blockquote-footer mt-3">Марина, Москва</footer>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="text-warning mb-3">⭐⭐⭐⭐⭐</div>
+                            <p>"Диван просто супер! Качество на высоте, доставка быстрая. Рекомендую!"</p>
+                            <footer class="blockquote-footer mt-3">Алексей, СПб</footer>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="text-warning mb-3">⭐⭐⭐⭐⭐</div>
+                            <p>"Отличный сервис, помогли с выбором, оформили рассрочку. Спасибо!"</p>
+                            <footer class="blockquote-footer mt-3">Ольга, Казань</footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<style>
+.hero-section {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+    color: white;
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,1000 1000,0 1000,1000"/></svg>');
+    animation: float 20s infinite linear;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+    100% { transform: translateY(0px) rotate(360deg); }
+}
+
+.category-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    height: 250px;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.category-card .card-img {
+    transition: transform 0.5s ease;
+    height: 100%;
+    object-fit: cover;
+}
+
+.category-card:hover .card-img {
+    transform: scale(1.1);
+}
+
+.discount-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ff6b6b;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.feature-card {
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.btn-warning {
+    background: linear-gradient(45deg, #ffd700, #ffa500);
+    border: none;
+    font-weight: bold;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(45deg, #ffa500, #ff8c00);
+    transform: translateY(-2px);
+}
+</style>
+{% endblock %}

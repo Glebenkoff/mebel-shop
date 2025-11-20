@@ -1,0 +1,166 @@
+<!-- accounts/templates/accounts/profile.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Личный кабинет — Личный кабинет</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #515374;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .info-item {
+            margin: 8px 0;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .logout-link {
+            display: inline-block;
+            color: #e74c3c;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+        .logout-link:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background-color: #f1f1f1;
+        }
+        .no-orders {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        .btn-logout {
+            background: #ff0000;
+            color: rgb(255, 255, 255);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        .btn-logout:hover {
+            background: #2affb8;
+        }
+        .btn-logout:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Личный кабинет</h1>
+
+    <!-- Основная информация о пользователе -->
+    <div class="section">
+        <h2>Мои данные</h2>
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">Фамилия:</span> {{ user.last_name|default:"Не указана" }}
+            </div>
+            <div class="info-item">
+                <span class="info-label">Имя:</span> {{ user.first_name|default:"Не указано" }}
+            </div>
+            <div class="info-item">
+                <span class="info-label">Отчество:</span> {{ profile.patronymic|default:"Не указано" }}
+            </div>
+            <div class="info-item">
+                <span class="info-label">Email:</span> {{ user.email }}
+            </div>
+            <div class="info-item">
+                <span class="info-label">Телефон:</span> {{ profile.phone|default:"Не указан" }}
+            </div>
+        </div>
+
+        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn-logout">
+                Выйти из аккаунта
+            </button>
+        </form>
+</div>
+
+    <!-- История заказов -->
+    <div class="section">
+        <h2>Мои заказы</h2>
+        {% if orders %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>№ заказа</th>
+                        <th>Дата</th>
+                        <th>Сумма</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+                        <td>{{ order.total_price }} ₽</td>
+                        <td>
+                            {% if order.status %}
+                                {{ order.get_status_display }}
+                            {% else %}
+                                Оформлен
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-orders">У вас пока нет заказов.</p>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

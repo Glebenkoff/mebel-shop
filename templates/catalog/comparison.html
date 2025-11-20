@@ -1,0 +1,113 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>⚖️ Сравнение товаров</h1>
+    
+    {% if products %}
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Характеристика</th>
+                    {% for product in products %}
+                    <th>{{ product.name }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Цена</td>
+                    {% for product in products %}
+                    <td class="fw-bold text-success">{{ product.price }} ₽</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Категория</td>
+                    {% for product in products %}
+                    <td>{{ product.category.name }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Наличие</td>
+                    {% for product in products %}
+                    <td>
+                        {% if product.available %}
+                        <span class="badge bg-success">В наличии</span>
+                        {% else %}
+                        <span class="badge bg-warning">Нет в наличии</span>
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="mt-3">
+        <a href="{% url 'comparison_toggle' products.0.id %}" class="btn btn-danger">Очистить сравнение</a>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        <h4>Нет товаров для сравнения</h4>
+        <p>Добавьте товары в сравнение чтобы увидеть различия!</p>
+        <a href="{% url 'product_list' %}" class="btn btn-primary">Перейти в каталог</a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+console.log('=== СКРИПТ COMPARISON ЗАГРУЖЕН ===');
+
+// Ждем полной загрузки страницы
+window.addEventListener('load', function() {
+    console.log('=== PAGE LOADED ===');
+    setupComparisonHandlers();
+});
+
+// Или если DOM уже загружен
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupComparisonHandlers);
+} else {
+    setupComparisonHandlers();
+}
+
+function setupComparisonHandlers() {
+    console.log('=== SETUP COMPARISON HANDLERS ===');
+    
+    // Ищем ссылки с задержкой
+    setTimeout(() => {
+        const links = document.querySelectorAll('a[href*="/comparison/toggle/"]');
+        console.log('Найдено ссылок сравнения:', links.length);
+        
+        links.forEach(link => {
+            console.log('Добавляем обработчик для:', link.href);
+            link.addEventListener('click', handleComparisonClick);
+        });
+    }, 100);
+}
+
+function handleComparisonClick(e) {
+    console.log('=== КЛИК ПО ССЫЛКЕ СРАВНЕНИЯ ===', this.href);
+    e.preventDefault();
+    
+    fetch(this.href, {
+        headers: {'X-Requested-With': 'XMLHttpRequest'}
+    })
+    .then(r => r.json())
+    .then(data => {
+        console.log('AJAX ответ сравнения:', data);
+        
+        if (data.success && !data.added) {
+            // Для сравнения проще перезагрузить страницу
+            console.log('Перезагружаем страницу сравнения');
+            window.location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        window.location.href = this.href;
+    });
+}
+</script>
+{% endblock %}

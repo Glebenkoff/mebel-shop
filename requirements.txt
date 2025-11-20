@@ -1,0 +1,8 @@
+﻿# Создаем чистый requirements.txt
+@"
+Django==4.2.7
+requests==2.31.0
+python-dotenv==1.0.1
+sqlparse==0.5.0
+tzdata==2024.1
+"@ | Out-File requirements.txt -Encoding utf8

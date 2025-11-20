@@ -1,0 +1,96 @@
+/* === Анимация кнопок === */
+.btn {
+    transition: all 0.3s ease-in-out !important;
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+    padding: 0.3rem 0.8rem !important;
+    border: none !important;
+}
+
+/* Убираем стандартный outline */
+.btn:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+
+/* Анимация при наведении — для всех кнопок */
+.btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Конкретные цвета при наведении */
+.btn-success:hover {
+    background-color: #1d9e59 !important;
+    border-color: #1d9e59 !important;
+}
+
+.btn-primary:hover {
+    background-color: #1972b8 !important;
+    border-color: #1972b8 !important;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800 !important;
+    border-color: #e0a800 !important;
+}
+
+.btn-outline-light:hover {
+    color: #5f676e !important;
+    background-color: #f8f9fa !important;
+}
+
+.btn-outline-danger:hover {
+    color: #721c24 !important;
+    background-color: #f8d7da !important;
+    border-color: #f8d7da !important;
+}
+
+/* Корзина — анимация значка */
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn-warning:hover .cart-badge {
+    transform: scale(1.1);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.description-preview {
+    line-height: 1.6;
+    max-height: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.description-full {
+    line-height: 1.6;
+}
+
+.btn-link {
+    font-size: 0.9rem;
+    color: #0d6efd;
+    text-decoration: underline;
+}
+
+.btn-link:hover {
+    color: #0b5ed7;
+    text-decoration: underline;
+}

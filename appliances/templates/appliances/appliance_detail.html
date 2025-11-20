@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .product-detail { border: 1px solid #ddd; padding: 20px; border-radius: 5px; }
+        .price { color: #2c5aa0; font-weight: bold; font-size: 1.2em; }
+        .no-price { color: #999; }
+    </style>
+</head>
+<body>
+    <h1>{{ product.name }}</h1>
+    
+    <div class="product-detail">
+        <p><strong>Артикул:</strong> {{ product.part_number }}</p>
+        <p><strong>Производитель:</strong> {{ product.producer }}</p>
+        <p><strong>Бренд:</strong> {{ product.brand|default:"Не указан" }}</p>
+        <p><strong>Категория:</strong> {{ product.category.name }}</p>
+        <p><strong>Наличие:</strong> {{ product.stock }} шт.</p>
+        <p><strong>Цена:</strong> 
+            <span class="{% if product.price %}price{% else %}no-price{% endif %}">
+                {% if product.price %}{{ product.price }} руб.{% else %}Нет цены{% endif %}
+            </span>
+        </p>
+        
+        {% if product.warranty %}
+        <p><strong>Гарантия:</strong> {{ product.warranty }}</p>
+        {% endif %}
+        
+        {% if product.description %}
+        <div>
+            <strong>Описание:</strong>
+            <div>{{ product.description|safe }}</div>
+        </div>
+        {% endif %}
+        
+        <p><strong>Код товара:</strong> {{ product.item_id }}</p>
+        <p><strong>Штрих-код:</strong> {{ product.ean128|default:"Не указан" }}</p>
+        <p><strong>НДС:</strong> {{ product.vat_percent|default:"Не указан" }}%</p>
+    </div>
+
+    <p><a href="{% url 'appliances:appliance_list' %}">Вернуться к списку товаров</a></p>
+</body>
+</html>

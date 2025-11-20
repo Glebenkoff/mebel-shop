@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Корзина — Мебель на заказ</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9f9f9;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        .cart-item {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            padding: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .cart-item img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+        .item-info {
+            flex: 1;
+        }
+        .item-info h3 {
+            margin: 0 0 8px;
+            font-size: 1.3em;
+        }
+        .price {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .total {
+            margin: 20px 0;
+            font-size: 1.4em;
+            text-align: right;
+            font-weight: bold;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn-primary {
+            background: #e74c3c;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #c0392b;
+        }
+        .btn-secondary {
+            background: #3498db;
+            color: white;
+            margin-right: 15px;
+        }
+        .btn-secondary:hover {
+            background: #2980b9;
+        }
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .empty-cart {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-delete {
+            padding: 5px 12px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-delete:hover {
+            background: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <h1>🛒 Корзина</h1>
+
+    {% if items %}
+        {% for item in items %}
+            <div class="cart-item">
+                {% if item.product.images.exists %}
+                    <img src="{{ item.product.images.first.image.url }}" alt="{{ item.product.name }}">
+                {% else %}
+                    <div style="width:120px; height:120px; background:#eee; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#888;">
+                        Нет фото
+                    </div>
+                {% endif %}
+
+                <div class="item-info">
+                    <h3>{{ item.product.name }}</h3>
+                    <p>{{ item.product.description|truncatewords:12 }}</p>
+                    <p class="price">{{ item.product.base_price }} ₽ × {{ item.quantity }}</p>
+                    <p><strong>Итого:</strong> {{ item.total_price|floatformat:0 }} ₽</p>
+
+                    <form method="post" action="{% url 'update_cart_item' item.id %}" style="margin-top: 10px; display: inline-block;">
+                        {% csrf_token %}
+                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="99" style="width: 60px; padding: 5px;">
+                        <button type="submit" style="
+                            margin-left: 5px;
+                            padding: 5px 12px;
+                            background: #3498db;
+                            color: white;
+                            border: none;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            font-size: 0.95em;
+                            display: flex;
+                            align-items: center;
+                            gap: 6px;
+                        ">
+                            🔄 Обновить
+                        </button>
+                    </form>
+
+                    <button class="btn-delete" data-item-id="{{ item.id }}" style="margin-left: 10px;">
+                        🗑️ Удалить
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="total">
+            Общая сумма: {{ total|floatformat:0 }} ₽
+        </div>
+        <div class="actions">
+            <a href="{% url 'home' %}" class="btn btn-secondary">← Вернуться в каталог</a>
+            <a href="{% url 'create_order' %}" class="btn btn-primary">Оформить заказ</a>
+        </div>
+
+    {% else %}
+        <div class="empty-cart">
+            <h2>Корзина пуста</h2>
+            <p>Добавьте товары из каталога!</p>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Перейти в каталог</a>
+        </div>
+    {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.btn-delete').forEach(button => {
+                button.addEventListener('click', function () {
+                    const itemId = this.getAttribute('data-item-id');
+                    const cartItem = this.closest('.cart-item');
+
+                    if (!confirm('Вы уверены, что хотите удалить этот товар из корзины?')) {
+                        return;
+                    }
+
+                    function getCookie(name) {
+                        let cookieValue = null;
+                        if (document.cookie && document.cookie !== '') {
+                            const cookies = document.cookie.split(';');
+                            for (let i = 0; i < cookies.length; i++) {
+                                const cookie = cookies[i].trim();
+                                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                    break;
+                                }
+                            }
+                        }
+                        return cookieValue;
+                    }
+
+                    const csrftoken = getCookie('csrftoken');
+
+                    fetch(`/cart/remove/${itemId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrftoken,
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            cartItem.style.opacity = '0';
+                            cartItem.style.transition = 'opacity 0.3s';
+                            setTimeout(() => cartItem.remove(), 300);
+                        } else {
+                            alert('Ошибка при удалении товара.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Ошибка:', error);
+                        alert('Не удалось подключиться к серверу.');
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Каталог товаров</h1>
+    
+    <!-- Улучшенная форма поиска -->
+    <form method="get" action="{% url 'product_search' %}" class="mb-4" id="searchForm">
+        <div class="input-group position-relative">
+            <input type="text" name="q" class="form-control" 
+                   placeholder="Поиск товаров..." value="{{ query }}" id="searchInput">
+            <button class="btn btn-primary" type="submit">Найти</button>
+        </div>
+        <!-- Автодополнение -->
+        <div class="autocomplete-dropdown" id="autocompleteDropdown" style="display: none;"></div>
+    </form>
+
+    <!-- Простые фильтры -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <form method="get" class="d-flex gap-2">
+                <input type="hidden" name="q" value="{{ query }}">
+                <input type="number" name="min_price" class="form-control" placeholder="Цена от" 
+                       value="{{ request.GET.min_price }}">
+                <input type="number" name="max_price" class="form-control" placeholder="Цена до" 
+                       value="{{ request.GET.max_price }}">
+                <button type="submit" class="btn btn-outline-primary">Фильтр</button>
+                {% if request.GET.min_price or request.GET.max_price %}
+                <a href="?q={{ query }}" class="btn btn-outline-secondary">Сбросить</a>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    {% if query %}
+    <p>Результаты поиска для: "<strong>{{ query }}</strong>"</p>
+    {% endif %}
+
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text text-success fw-bold">{{ product.price }} ₽</p>
+                    <p class="card-text">
+                        <small class="text-muted">{{ product.category.name }}</small>
+                    </p>
+                    
+                    <div class="mt-auto">
+                        <div class="d-grid gap-2">
+                            <a href="{{ product.get_absolute_url }}" class="btn btn-outline-primary">Подробнее</a>
+                            <a href="{% url 'cart_add' product.id %}" class="btn btn-primary">В корзину</a>
+                            
+                            {% if user.is_authenticated %}
+                            <div class="btn-group w-100">
+                                <a href="{% url 'wishlist_toggle' product.id %}" class="btn btn-outline-danger">
+                                    ❤️ Избранное
+                                </a>
+                                <a href="{% url 'comparison_toggle' product.id %}" class="btn btn-outline-info">
+                                    ⚖️ Сравнить
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                {% if query %}
+                По запросу "{{ query }}" товаров не найдено.
+                {% else %}
+                Товары пока не добавлены.
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.autocomplete-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.autocomplete-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+.autocomplete-item:hover {
+    background-color: #f8f9fa;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const dropdown = document.getElementById('autocompleteDropdown');
+    
+    searchInput.addEventListener('input', function() {
+        const query = this.value.trim();
+        
+        if (query.length < 2) {
+            dropdown.style.display = 'none';
+            return;
+        }
+        
+        fetch(`/catalog/search/autocomplete/?q=${encodeURIComponent(query)}`)
+            .then(r => r.json())
+            .then(data => {
+                if (data.results.length > 0) {
+                    dropdown.innerHTML = data.results.map(item => `
+                        <div class="autocomplete-item" onclick="selectAutocomplete('${item.name}')">
+                            <span>${item.name}</span>
+                            <span class="text-success">${item.price} ₽</span>
+                        </div>
+                    `).join('');
+                    dropdown.style.display = 'block';
+                } else {
+                    dropdown.style.display = 'none';
+                }
+            });
+    });
+    
+    // Закрытие при клике вне
+    document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target) && e.target !== searchInput) {
+            dropdown.style.display = 'none';
+        }
+    });
+});
+
+function selectAutocomplete(name) {
+    document.getElementById('searchInput').value = name;
+    document.getElementById('autocompleteDropdown').style.display = 'none';
+    document.getElementById('searchForm').submit();
+}
+
+// AJAX добавление в корзину
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.dataset.productId;
+            const button = this;
+            
+            fetch(`/cart/add/${productId}/ajax/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Обновляем счетчик корзины в навигации
+                        const cartCounter = document.querySelector('.cart-count');
+                        if (cartCounter) {
+                            cartCounter.textContent = data.cart_count;
+                        }
+                        
+                        // Показываем уведомление
+                        showNotification(data.message, 'success');
+                        
+                        // Меняем текст кнопки на короткое время
+                        const originalText = button.textContent;
+                        button.textContent = '✓ Добавлено';
+                        button.disabled = true;
+                        
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                            button.disabled = false;
+                        }, 2000);
+                    } else {
+                        showNotification(data.error, 'error');
+                    }
+                })
+                .catch(error => {
+                    showNotification('Ошибка при добавлении в корзину', 'error');
+                });
+        });
+    });
+});
+
+function showNotification(message, type) {
+    // Создаем уведомление
+    const notification = document.createElement('div');
+    notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show`;
+    notification.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    notification.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Автоматически удаляем через 3 секунды
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 3000);
+}
+</script>
+{% endblock %}

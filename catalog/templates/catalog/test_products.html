@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Тест товаров - РАБОТАЕТ!</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .success { color: green; font-weight: bold; }
+        .product { border: 1px solid #ddd; padding: 10px; margin: 10px 0; }
+        .price { color: #2c5aa0; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🎉 Тестовая страница товаров - РАБОТАЕТ!</h1>
+    
+    <div class="success">
+        Всего товаров в базе: {{ products_count }}
+    </div>
+    
+    {% if products %}
+        <h2>📦 Список товаров (первые 10):</h2>
+        {% for product in products %}
+            <div class="product">
+                <h3>{{ product.name }}</h3>
+                <p class="price">💰 Цена: {{ product.price }} руб</p>
+                <p>📁 Категория: {{ product.category.name|default:"Без категории" }}</p>
+                {% if product.description %}
+                    <p>📝 {{ product.description|truncatewords:20 }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <div style="color: red; font-weight: bold;">
+            ❌ ТОВАРОВ НЕТ В БАЗЕ!
+        </div>
+    {% endif %}
+    
+    <hr>
+    <p><a href="/">Попробовать главную страницу</a></p>
+    <p><a href="/catalog/">Попробовать каталог</a></p>
+</body>
+</html>

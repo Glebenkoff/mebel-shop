@@ -1,0 +1,860 @@
+ОТЧЕТ О ПРОЕКТЕ DJANGO
+==================================================
+
+СТРУКТУРА ПРОЕКТА:
+
+accounts/
+  📄 admin.py
+  📄 apps.py
+  📄 models.py
+  📄 signals.py
+  📄 tests.py
+  📄 urls.py
+  📄 views.py
+  📄 __init__.py
+
+accounts\migrations/
+  📄 0001_initial.py
+  📄 __init__.py
+
+accounts\templates/
+
+accounts\templates\accounts/
+  📄 profile.html
+
+accounts\templates\registration/
+  📄 activation_invalid.html
+  📄 login.html
+  📄 register.html
+
+backup_commands/
+  📄 check_catalog_data.py
+  📄 check_catalog_final.py
+  📄 check_catalog_fixed.py
+  📄 check_catalog_simple.py
+  📄 check_templates.py
+  📄 check_urls_fix.py
+  📄 check_urls_views.py
+  📄 check_views.py
+  📄 sync_categories.py
+  📄 sync_products.py
+  📄 sync_products_fixed.py
+  📄 sync_product_images.py
+
+cart/
+  📄 admin.py
+  📄 apps.py
+  📄 context_processors.py
+  📄 models.py
+  📄 tests.py
+  📄 urls.py
+  📄 views.py
+  📄 __init__.py
+
+cart\migrations/
+  📄 __init__.py
+
+cart\templates/
+
+cart\templates\cart/
+  📄 cart_detail.html
+
+catalog/
+  📄 admin.py
+  📄 api.py
+  📄 apps.py
+  📄 context_processors.py
+  📄 create_categories.py
+  📄 forms.py
+  📄 models.py
+  📄 ocs_client.py
+  📄 tests.py
+  📄 urls.py
+  📄 utils.py
+  📄 views.py
+  📄 __init__.py
+
+catalog\management/
+
+catalog\management\commands/
+  📄 add_placeholder_images.py
+  📄 analyze_categories.py
+  📄 analyze_database.py
+  📄 analyze_duplicates.py
+  📄 analyze_models.py
+  📄 analyze_ocs_docs.py
+  📄 analyze_prices.py
+  📄 analyze_production.py
+  📄 analyze_project.py
+  📄 api_status.py
+  📄 assign_categories.py
+  📄 assign_ocs_products.py
+  📄 assign_products_to_categories.py
+  📄 build_category_tree.py
+  📄 build_ocs_category_tree.py
+  📄 check_all_pages.py
+  📄 check_catalog_template.py
+  📄 check_dependencies.py
+  📄 check_final_indexes.py
+  📄 check_fix.py
+  📄 check_model_structure.py
+  📄 check_ocs_methods.py
+  📄 check_ocs_settings.py
+  📄 check_product_import.py
+  📄 check_refactor.py
+  📄 check_templates_quick.py
+  📄 create_backup_snapshot.py
+  📄 create_brand_categories.py
+  📄 create_categories.py
+  📄 create_category_mappings.py
+  📄 create_db_indexes.py
+  📄 create_limited_categories.py
+  📄 create_minimal_working.py
+  📄 create_optimization_migrations.py
+  📄 create_production_settings.py
+  📄 create_products_from_partner.py
+  📄 create_project_report.py
+  📄 create_simple_api.py
+  📄 create_simple_products.py
+  📄 create_test_page.py
+  📄 create_working_home.py
+  📄 create_working_test.py
+  📄 daily_update.py
+  📄 debug_400_error.py
+  📄 debug_price_import.py
+  📄 debug_real_site.py
+  📄 debug_site_products.py
+  📄 debug_sync_products.py
+  📄 debug_templates.py
+  📄 diagnose_categories.py
+  📄 diagnose_ocs_products.py
+  📄 diagnose_routing.py
+  📄 extract_brands_from_names.py
+  📄 fetch_categories.py
+  📄 fetch_cities.py
+  📄 fetch_content.py
+  📄 fetch_products.py
+  📄 finalize_category_assignments.py
+  📄 final_fix_structure.py
+  📄 final_project_check.py
+  📄 find_price_endpoints.py
+  📄 find_relation.py
+  📄 find_technika_link.py
+  📄 fixed_cleanup.py
+  📄 fix_400_error.py
+  📄 fix_all_header_urls.py
+  📄 fix_catalog_issues.py
+  📄 fix_catalog_view.py
+  📄 fix_categories.py
+  📄 fix_category_assignments.py
+  📄 fix_category_assignment_v2.py
+  📄 fix_category_assignment_v3.py
+  📄 fix_category_slugs.py
+  📄 fix_context_issue.py
+  📄 fix_header_urls.py
+  📄 fix_indexes.py
+  📄 fix_main_views.py
+  📄 fix_ocs_settings.py
+  📄 fix_prices.py
+  📄 fix_products_final.py
+  📄 fix_remaining_categories.py
+  📄 fix_routing.py
+  📄 fix_site_display.py
+  📄 fix_site_display_correct.py
+  📄 fix_slugs.py
+  📄 fix_slugs_only.py
+  📄 fix_technika_link.py
+  📄 fix_views_auto.py
+  📄 force_fix_slugs.py
+  📄 force_sync_products.py
+  📄 import_ocs_prices.py
+  📄 move_products_to_subcategories.py
+  📄 open_site.py
+  📄 production_report.py
+  📄 quick_production_fix.py
+  📄 rebuild_categories_properly.py
+  📄 restore_from_backup.py
+  📄 restore_old_structure.py
+  📄 safe_cleanup.py
+  📄 safe_update_categories.py
+  📄 setup_safe_development.py
+  📄 show_uncategorized_products.py
+  📄 sync_all_appliances.py
+  📄 sync_all_appliances_no_price_filter.py
+  📄 sync_extended_appliances.py
+  📄 sync_filtered_products.py
+  📄 sync_home_appliances.py
+  📄 sync_household_fixed.py
+  📄 sync_ocs_by_category.py
+  📄 sync_ocs_categories.py
+  📄 sync_ocs_products.py
+  📄 sync_products.py
+  📄 sync_real_ocs_products.py
+  📄 sync_smart.py
+  📄 sync_test_fixed.py
+  📄 sync_test_household.py
+  📄 sync_with_placeholders.py
+  📄 test_appliance_filter.py
+  📄 test_minimal_site.py
+  📄 test_ocs_api.py
+  📄 test_ocs_connection.py
+  📄 test_ocs_endpoints.py
+  📄 test_ocs_prices.py
+  📄 test_ocs_products.py
+  📄 universal_check.py
+  📄 universal_sync.py
+  📄 update_category_structure.py
+
+catalog\migrations/
+  📄 0001_initial.py
+  📄 0002_alter_category_options_alter_partnerproduct_options_and_more.py
+  📄 0003_category_image_product.py
+  📄 0004_category_category_type.py
+  📄 0005_categorymapping.py
+  📄 0006_partnerproduct_external_id.py
+  📄 0007_partnerproduct_is_active.py
+  📄 __init__.py
+
+catalog\services/
+  📄 ocs_api_service.py
+  📄 ocs_sync_service.py
+  📄 __init__.py
+
+catalog\templates/
+
+catalog\templates\catalog/
+  📄 catalog.html
+  📄 category.html
+  📄 list.html
+  📄 product_detail.html
+  📄 test_products.html
+
+core/
+  📄 asgi.py
+  📄 settings.py
+  📄 urls.py
+  📄 views.py
+  📄 wsgi.py
+  📄 __init__.py
+
+logs/
+
+main/
+  📄 admin.py
+  📄 apps.py
+  📄 base.html
+  📄 home.html
+  📄 models.py
+  📄 tests.py
+  📄 urls.py
+  📄 views.py
+  📄 __init__.py
+
+main\migrations/
+  📄 __init__.py
+
+media/
+
+media\categories/
+
+media\products/
+
+media\products\1000416315/
+
+media\products\1000417004/
+
+media\products\1000551103/
+
+media\products\1000556228/
+
+media\products\1000558633/
+
+media\products\1000558635/
+
+media\products\1000558797/
+
+media\products\1000560481/
+
+media\products\1000560508/
+
+media\products\1000560519/
+
+media\products\1000561405/
+
+media\products\1000561406/
+
+media\products\1000562330/
+
+media\products\1000562608/
+
+media\products\1000563275/
+
+media\products\1000563277/
+
+media\products\1000563279/
+
+media\products\1000563280/
+
+media\products\1000563281/
+
+media\products\1000563282/
+
+media\products\1000563283/
+
+media\products\1000563285/
+
+media\products\1000563467/
+
+media\products\1000564446/
+
+media\products\1000567859/
+
+media\products\1000567860/
+
+media\products\1000571118/
+
+media\products\1000571958/
+
+media\products\1000572016/
+
+media\products\1000572019/
+
+media\products\1000572556/
+
+media\products\1000572557/
+
+media\products\1000572951/
+
+media\products\1000574896/
+
+media\products\1000574954/
+
+media\products\1000574955/
+
+media\products\1000574956/
+
+media\products\1000575418/
+
+media\products\1000575421/
+
+media\products\1000576093/
+
+media\products\1000576094/
+
+media\products\1000576096/
+
+media\products\1000576245/
+
+media\products\1000576246/
+
+media\products\1000576251/
+
+media\products\1000576253/
+
+media\products\1000576255/
+
+media\products\1000576258/
+
+media\products\1000576272/
+
+media\products\1000576377/
+
+media\products\1000576378/
+
+media\products\1000576379/
+
+media\products\1000576382/
+
+media\products\1000576387/
+
+media\products\1000576388/
+
+media\products\1000576394/
+
+media\products\1000576395/
+
+media\products\1000576845/
+
+media\products\1000577513/
+
+media\products\1000577518/
+
+media\products\1000577992/
+
+media\products\1000577993/
+
+media\products\1000577994/
+
+media\products\1000578007/
+
+media\products\1000578008/
+
+media\products\1000578014/
+
+media\products\1000578016/
+
+media\products\1000578017/
+
+media\products\1000578370/
+
+media\products\1000579318/
+
+media\products\1000579561/
+
+media\products\1000579653/
+
+media\products\1000579655/
+
+media\products\1000579662/
+
+media\products\1000579763/
+
+media\products\1000579764/
+
+media\products\1000579765/
+
+media\products\1000579766/
+
+media\products\1000579767/
+
+media\products\1000579768/
+
+media\products\1000579769/
+
+media\products\1000579770/
+
+media\products\1000579771/
+
+media\products\1000579773/
+
+media\products\1000579776/
+
+media\products\1000580839/
+
+media\products\1000581316/
+
+media\products\1000581317/
+
+media\products\1000582762/
+
+media\products\1000582799/
+
+media\products\1000582812/
+
+media\products\1000582816/
+
+media\products\1000582818/
+
+media\products\1000582837/
+
+media\products\1000582838/
+
+media\products\1000582934/
+
+media\products\1000584368/
+
+media\products\1000584370/
+
+media\products\1000584427/
+
+media\products\1000584429/
+
+media\products\1000584430/
+
+media\products\1000584432/
+
+media\products\1000584435/
+
+media\products\1000584671/
+
+media\products\1000584672/
+
+media\products\1000584674/
+
+media\products\1000585640/
+
+media\products\1000588004/
+
+media\products\1000588481/
+
+media\products\1000589925/
+
+media\products\1000589926/
+
+media\products\1000589932/
+
+media\products\1000592097/
+
+media\products\1000592105/
+
+media\products\1000592788/
+
+media\products\1000592982/
+
+media\products\1000592983/
+
+media\products\1000593362/
+
+media\products\1000593885/
+
+media\products\1000593886/
+
+media\products\1000593887/
+
+media\products\1000593888/
+
+media\products\1000593889/
+
+media\products\1000596080/
+
+media\products\1000596095/
+
+orders/
+  📄 admin.py
+  📄 apps.py
+  📄 context_processors.py
+  📄 forms.py
+  📄 models.py
+  📄 tests.py
+  📄 urls.py
+  📄 views.py
+  📄 __init__.py
+
+orders\migrations/
+  📄 0001_initial.py
+  📄 __init__.py
+
+orders\templates/
+
+orders\templates\orders/
+  📄 cart.html
+  📄 order_form.html
+  📄 order_success.html
+
+orders\templates\registration/
+  📄 login.html
+
+pages/
+  📄 admin.py
+  📄 apps.py
+  📄 models.py
+  📄 tests.py
+  📄 urls.py
+  📄 views.py
+  📄 __init__.py
+
+pages\migrations/
+  📄 __init__.py
+
+pages\templates/
+  📄 base.html
+
+pages\templates\pages/
+  📄 home.html
+  📄 test.html
+
+project_backups/
+
+project_backups\working_snapshot_20251110_195422/
+  📄 README.md
+
+project_backups\working_snapshot_20251110_195422\catalog/
+  📄 urls.py
+  📄 views.py
+
+project_backups\working_snapshot_20251110_195422\core/
+  📄 urls.py
+  📄 views.py
+
+project_backups\working_snapshot_20251110_195422\templates/
+
+project_backups\working_snapshot_20251110_195422\templates\includes/
+  📄 header.html
+
+project_backups\working_snapshot_20251110_195422\templates\main/
+  📄 home.html
+
+static/
+
+static\css/
+
+static\images/
+
+static\js/
+
+static\videos/
+
+templates/
+  📄 base.html
+  📄 debug_ocs.html
+
+templates\cart/
+  📄 detail.html
+
+templates\catalog/
+  📄 catalog.html
+  📄 detail.html
+  📄 home.html
+  📄 list.html
+  📄 product_detail.html
+  📄 product_list.html
+
+templates\includes/
+  📄 footer.html
+  📄 header.html
+
+templates\main/
+  📄 home.html
+
+templates\orders/
+  📄 create.html
+  📄 detail.html
+
+templates\pages/
+  📄 about.html
+  📄 contacts.html
+
+
+БАЗА ДАННЫХ:
+  Product_count: 38
+  Category_count: 502
+  PartnerProduct_count: 40
+  Product_fields: ['id', 'category', 'name', 'description', 'price', 'image']
+  Category_fields: ['id', 'name', 'slug', 'parent', 'display', 'image', 'sort_order', 'ocs_category_code', 'category_type']
+
+
+НАСТРОЙКИ:
+  DEBUG: True
+  ALLOWED_HOSTS: ['localhost', '127.0.0.1']
+  INSTALLED_APPS: ['catalog', 'cart', 'orders', 'accounts.apps.AccountsConfig', 'pages']
+  DATABASES: ['default']
+  TEMPLATES_DIRS: [WindowsPath('C:/Users/harmo/Desktop/project/mebel-shop/templates')]
+
+
+СОДЕРЖАНИЕ КЛЮЧЕВЫХ ФАЙЛОВ:
+
+========================================
+Файл views
+========================================
+from django.shortcuts import render, get_object_or_404, redirect
+from .utils import get_products_by_category_wrapper as get_products_by_category
+from .utils import get_product_content_wrapper as get_product_content
+from django.http import JsonResponse
+from django.db.models import Q
+from .models import Product, Category, PartnerProduct
+import json
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator
+from django.utils.text import slugify
+from django.views.decorators.csrf import csrf_exempt
+
+def get_all_child_categories(category):
+    """Рекурсивно получает все дочерние категории"""
+    children = list(category.children.all())
+    for child in category.children.all():
+        children.extend(get_all_child_categories(child))
+    return children
+
+def is_category_in_limited_structure(category, limited_main_category):
+    """Проверяет, принадлежит ли категория ограниченной структуре"""
+    if category == limited_main_category:
+        return True
+    
+    # Проверяем всех родителей категории
+    current = category
+    while current.parent:
+        if current.parent == limited_main_category:
+            return True
+        current = current.parent
+    
+    return False
+
+def catalog_view(request):
+    category_slug = request.GET.get('category')
+    brand_slugs = request.GET.getlist('brand')
+    search_query = request.GET.get('q', '')
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+
+    # Находим нашу ограниченную основную категорию
+    limited_main_category = Category.objects.filter(
+        slug='bytovaya-tekhnika-i-elektronika',
+        category_type='main'
+    ).first()
+    
+    if limited_main_category:
+        # Получаем все подкатегории основной категории
+        all_limited_categories = get_all_child_categories(limited_main_category)
+        all_limited_categories.append(limited_main_category)
+        
+        # Фильтруем товары только по нашим кат...
+
+========================================
+Файл URLs
+========================================
+from django.urls import path
+from . import views
+from django.views.decorators.csrf import csrf_exempt
+
+app_name = 'catalog'
+
+urlpatterns = [
+    # Главная страница каталога (техника из OCS)
+    path('', views.catalog_view, name='product_list'),
+    
+    # Остальные маршруты каталога
+    path('catalog/', csrf_exempt(views.catalog_fixed), name='catalog'),
+    path('test-fixed/', views.test_products_fixed, name='test_fixed'),
+    path('simple/', views.catalog_list, name='simple_list'),
+    path('catalog-view/', views.catalog_view, name='catalog_view'),
+    path('product/<str:product_key>/', views.product_detail, name='product_detail'),
+    path('add-to-cart/', views.add_to_cart, name='add_to_cart'),
+    path('get-cart-count/', views.get_cart_count, name='get_cart_count'),
+    path('category/<str:category_code>/', views.category_detail, name='category_detail'),
+    path('catalog-by-category/<str:category_code>/', views.catalog_by_category, name='catalog_by_category'),
+    path('debug-ocs/', views.debug_ocs, name='debug_ocs'),
+]
+
+
+========================================
+Модели
+========================================
+from django.db import models
+from django.utils.text import slugify
+import os
+
+def product_image_path(instance, filename):
+    """Путь для сохранения изображений товаров"""
+    return f'products/{instance.product.product_key}/{filename}'
+
+class Category(models.Model):
+    name = models.CharField(max_length=200, verbose_name="Название категории")
+    slug = models.SlugField(unique=True)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    display = models.BooleanField(default=True, verbose_name="Отображать в каталоге")
+    image = models.ImageField(upload_to='categories/', null=True, blank=True)
+    sort_order = models.PositiveIntegerField(default=0, verbose_name="Порядок сортировки")
+    
+    # Новые поля для интеграции с OCS
+    ocs_category_code = models.CharField("Код в OCS", max_length=20, blank=True, null=True, unique=True)
+    
+    # Поле для определения типа категории
+    CATEGORY_TYPE_CHOICES = [
+        ('main', 'Основная категория'),
+        ('sub', 'Подкатегория'),
+        ('brand', 'Производитель'),
+    ]
+    category_type = models.CharField(
+        "Тип категории", 
+        max_length=10, 
+        choices=CATEGORY_TYPE_CHOICES, 
+        default='main'
+    )
+
+    class Meta:
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
+        ordering = ['sort_order']
+
+    def __str__(self):
+        return self.name
+    
+    def is_main_category(self):
+        return self.category_type == 'main' and self.parent is None
+    
+    def is_subcategory(self):
+        return self.category_type == 'sub' and self.parent is not None
+    
+    def is_brand(self):
+        return self.category_type == 'brand'
+    
+    def get_limited_main_categories(self):
+        """Получает только ограниченный набор основных категорий"""
+        return Category.objects.filter(
+            parent__isnull=True, 
+            category_type='main',
+            display=True,
+            slug='bytovaya-tekhnika...
+
+========================================
+Настройки
+========================================
+"""
+Django settings for core project.
+
+Generated by 'django-admin startproject' using Django 5.2.7.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/5.2/topics/settings/
+
+For the full list of settings and their values, see
+https://docs.djangoproject.com/en/5.2/ref/settings/
+"""
+
+from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+# Загрузка переменных окружения
+load_dotenv()
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-fallback-key-for-dev-only')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
+
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,.ocs.ru,*').split(',')
+
+# Application definition
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'catalog',
+    'cart',
+    'orders',
+    'accounts.apps.AccountsConfig',
+    'pages',
+]
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+ROOT_URLCONF = 'core.urls'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_proce...
+
+========================================
+Шаблон главной
+========================================
+Файл не найден
+
+========================================
+Шаблон каталога
+========================================
+Файл не найден

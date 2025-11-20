@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Регистрация</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; }
+        .form-container { max-width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
+        .btn { background: #2ecc71; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
+        .btn:hover { background: #27ae60; }
+        .alert { color: red; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Регистрация</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        <form method="post" id="register-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_last_name">Фамилия:</label>
+                <input type="text" name="last_name" id="id_last_name" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_first_name">Имя:</label>
+                <input type="text" name="first_name" id="id_first_name" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_patronymic">Отчество:</label>
+                <input type="text" name="patronymic" id="id_patronymic" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="id_email">Email:</label>
+                <input type="email" name="email" id="id_email" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_phone">Телефон:</label>
+                <input type="tel" name="phone" id="id_phone" class="form-control" placeholder="+7 (___) ___-__-__" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password">Пароль:</label>
+                <input type="password" name="password" id="id_password" class="form-control" minlength="6" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password2">Подтвердите пароль:</label>
+                <input type="password" name="password2" id="id_password2" class="form-control" required>
+            </div>
+            
+            <button type="submit" class="btn">Зарегистрироваться</button>
+            <p style="text-align: center; margin-top: 15px;">
+                Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('id_phone').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.startsWith('8')) value = value.slice(1);
+            if (value.startsWith('7')) value = value.slice(1);
+            value = value.slice(0, 10);
+            let formatted = '+7';
+            if (value) {
+                formatted += ' (';
+                if (value.length >= 3) {
+                    formatted += value.slice(0, 3) + ') ';
+                    if (value.length >= 6) {
+                        formatted += value.slice(3, 6) + '-';
+                        if (value.length >= 8) {
+                            formatted += value.slice(6, 8) + '-' + value.slice(8, 10);
+                        } else {
+                            formatted += value.slice(6);
+                        }
+                    } else {
+                        formatted += value.slice(3);
+                    }
+                } else {
+                    formatted += value;
+                }
+            }
+            e.target.value = formatted;
+        });
+    </script>
+</body>
+</html>

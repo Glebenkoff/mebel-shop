@@ -1,0 +1,502 @@
+[
+  {
+    "timestamp": "2025-11-16T18:14:09.110002",
+    "time_display": "18:14:09",
+    "date_display": "16.11.2025 18:14:09",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:14:11.665271",
+    "time_display": "18:14:11",
+    "date_display": "16.11.2025 18:14:11",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:15:09.769672",
+    "time_display": "18:15:09",
+    "date_display": "16.11.2025 18:15:09",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:15:12.316854",
+    "time_display": "18:15:12",
+    "date_display": "16.11.2025 18:15:12",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:16:10.454515",
+    "time_display": "18:16:10",
+    "date_display": "16.11.2025 18:16:10",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:16:13.042323",
+    "time_display": "18:16:13",
+    "date_display": "16.11.2025 18:16:13",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:17:11.155894",
+    "time_display": "18:17:11",
+    "date_display": "16.11.2025 18:17:11",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:17:13.777360",
+    "time_display": "18:17:13",
+    "date_display": "16.11.2025 18:17:13",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:18:11.856522",
+    "time_display": "18:18:11",
+    "date_display": "16.11.2025 18:18:11",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:18:14.504801",
+    "time_display": "18:18:14",
+    "date_display": "16.11.2025 18:18:14",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:19:12.598701",
+    "time_display": "18:19:12",
+    "date_display": "16.11.2025 18:19:12",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:19:15.184483",
+    "time_display": "18:19:15",
+    "date_display": "16.11.2025 18:19:15",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:20:13.348588",
+    "time_display": "18:20:13",
+    "date_display": "16.11.2025 18:20:13",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:20:15.876828",
+    "time_display": "18:20:15",
+    "date_display": "16.11.2025 18:20:15",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:21:14.030610",
+    "time_display": "18:21:14",
+    "date_display": "16.11.2025 18:21:14",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:21:16.602856",
+    "time_display": "18:21:16",
+    "date_display": "16.11.2025 18:21:16",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:22:14.699783",
+    "time_display": "18:22:14",
+    "date_display": "16.11.2025 18:22:14",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:22:17.280382",
+    "time_display": "18:22:17",
+    "date_display": "16.11.2025 18:22:17",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:23:15.378221",
+    "time_display": "18:23:15",
+    "date_display": "16.11.2025 18:23:15",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:23:17.951896",
+    "time_display": "18:23:17",
+    "date_display": "16.11.2025 18:23:17",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:24:16.088253",
+    "time_display": "18:24:16",
+    "date_display": "16.11.2025 18:24:16",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:24:18.670845",
+    "time_display": "18:24:18",
+    "date_display": "16.11.2025 18:24:18",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:25:16.837139",
+    "time_display": "18:25:16",
+    "date_display": "16.11.2025 18:25:16",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:25:19.352987",
+    "time_display": "18:25:19",
+    "date_display": "16.11.2025 18:25:19",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 8
+  },
+  {
+    "timestamp": "2025-11-16T18:26:16.519819",
+    "time_display": "18:26:16",
+    "date_display": "16.11.2025 18:26:16",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:26:20.041349",
+    "time_display": "18:26:20",
+    "date_display": "16.11.2025 18:26:20",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:27:17.230980",
+    "time_display": "18:27:17",
+    "date_display": "16.11.2025 18:27:17",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:27:20.749126",
+    "time_display": "18:27:20",
+    "date_display": "16.11.2025 18:27:20",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:28:17.924648",
+    "time_display": "18:28:17",
+    "date_display": "16.11.2025 18:28:17",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:28:21.428519",
+    "time_display": "18:28:21",
+    "date_display": "16.11.2025 18:28:21",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:29:18.623388",
+    "time_display": "18:29:18",
+    "date_display": "16.11.2025 18:29:18",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:29:22.111602",
+    "time_display": "18:29:22",
+    "date_display": "16.11.2025 18:29:22",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:30:19.340648",
+    "time_display": "18:30:19",
+    "date_display": "16.11.2025 18:30:19",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:30:22.817578",
+    "time_display": "18:30:22",
+    "date_display": "16.11.2025 18:30:22",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:31:20.057669",
+    "time_display": "18:31:20",
+    "date_display": "16.11.2025 18:31:20",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:31:23.517083",
+    "time_display": "18:31:23",
+    "date_display": "16.11.2025 18:31:23",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:32:20.792814",
+    "time_display": "18:32:20",
+    "date_display": "16.11.2025 18:32:20",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:32:24.225238",
+    "time_display": "18:32:24",
+    "date_display": "16.11.2025 18:32:24",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:33:21.521910",
+    "time_display": "18:33:21",
+    "date_display": "16.11.2025 18:33:21",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:33:24.908799",
+    "time_display": "18:33:24",
+    "date_display": "16.11.2025 18:33:24",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:34:22.249491",
+    "time_display": "18:34:22",
+    "date_display": "16.11.2025 18:34:22",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-16T18:34:25.683950",
+    "time_display": "18:34:25",
+    "date_display": "16.11.2025 18:34:25",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-17T11:26:38.683114",
+    "time_display": "11:26:38",
+    "date_display": "17.11.2025 11:26:38",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-17T11:26:39.227688",
+    "time_display": "11:26:39",
+    "date_display": "17.11.2025 11:26:39",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-17T11:27:39.371464",
+    "time_display": "11:27:39",
+    "date_display": "17.11.2025 11:27:39",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-17T11:27:39.908676",
+    "time_display": "11:27:39",
+    "date_display": "17.11.2025 11:27:39",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 18,
+    "apps_count": 9
+  },
+  {
+    "timestamp": "2025-11-17T12:58:02.455646",
+    "time_display": "12:58:02",
+    "date_display": "17.11.2025 12:58:02",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 16,
+    "templates": 18,
+    "apps_count": 7
+  },
+  {
+    "timestamp": "2025-11-17T16:04:02.965994",
+    "time_display": "16:04:02",
+    "date_display": "17.11.2025 16:04:02",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 24,
+    "apps_count": 7
+  },
+  {
+    "timestamp": "2025-11-17T16:04:49.381269",
+    "time_display": "16:04:49",
+    "date_display": "17.11.2025 16:04:49",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 24,
+    "apps_count": 7
+  },
+  {
+    "timestamp": "2025-11-17T17:21:30.712880",
+    "time_display": "17:21:30",
+    "date_display": "17.11.2025 17:21:30",
+    "type": "auto_update",
+    "progress": 85,
+    "models": 11,
+    "templates": 24,
+    "apps_count": 7
+  }
+]

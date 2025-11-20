@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Сайдбар с категориями -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Категории</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="{% url 'blog:article_list' %}" 
+                               class="{% if not current_category %}fw-bold text-primary{% endif %}">
+                                Все статьи
+                            </a>
+                        </li>
+                        {% for category in categories %}
+                        <li>
+                            <a href="{% url 'blog:article_list_by_category' category.slug %}" 
+                               class="{% if current_category == category %}fw-bold text-primary{% endif %}">
+                                {{ category.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Список статей -->
+        <div class="col-md-9">
+            <h1>Блог о мебели</h1>
+            <p class="text-muted">Полезные статьи и советы по выбору мебели</p>
+            
+            {% for article in articles %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="{% url 'blog:article_detail' article.slug %}" class="text-decoration-none">
+                            {{ article.title }}
+                        </a>
+                    </h3>
+                    
+                    <div class="d-flex justify-content-between text-muted small mb-3">
+                        <span>
+                            <i class="fas fa-user me-1"></i>{{ article.author.username }}
+                        </span>
+                        <span>
+                            <i class="fas fa-calendar me-1"></i>{{ article.published_at|date:"d.m.Y" }}
+                        </span>
+                        <span>
+                            <i class="fas fa-eye me-1"></i>{{ article.views }} просмотров
+                        </span>
+                    </div>
+                    
+                    {% if article.excerpt %}
+                    <p class="card-text">{{ article.excerpt }}</p>
+                    {% else %}
+                    <p class="card-text">{{ article.content|truncatewords:30 }}</p>
+                    {% endif %}
+                    
+                    <a href="{% url 'blog:article_detail' article.slug %}" class="btn btn-primary">
+                        Читать далее
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-5">
+                <h3>Статьи скоро появятся</h3>
+                <p class="text-muted">Мы готовим для вас полезные материалы</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

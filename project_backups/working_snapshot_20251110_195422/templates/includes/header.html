@@ -1,0 +1,47 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="bi bi-sofa me-1"></i> Мебельный магазин
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">О компании</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Доставка</a></li>
+                <li class="nav-item"><a class="nav-link" href="/contacts/">Контакты</a></li>
+                <!-- ИСПРАВЛЕНО: Добавлен закрывающий тег </ul> и правильная ссылка на каталог -->
+                <li class="nav-item"><a class="nav-link" href="/products/">Техника</a></li>
+            </ul>
+            
+            <div class="d-flex align-items-center gap-2">
+                <!-- WhatsApp -->
+                <a href="https://wa.me/79111347647?text=Здравствуйте!%20Хочу%20заказать%20бесплатную%20консультацию%20по%20мебели."
+                   class="btn btn-sm btn-success" target="_blank" rel="noopener noreferrer">
+                    <i class="bi bi-whatsapp me-1"></i> Консультация
+                </a>
+
+                <!-- Аккаунт -->
+                {% if user.is_authenticated %}
+                    <span class="text-white d-none d-md-inline">Привет, {{ user.first_name|default:user.username }}!</span>
+                    <a href="/accounts/profile/" class="btn btn-sm btn-outline-light">Кабинет</a>
+                    <a href="/accounts/logout/" class="btn btn-sm btn-outline-danger">Выйти</a>
+                {% else %}
+                    <a href="/accounts/login/" class="btn btn-sm btn-outline-light">Войти</a>
+                    <a href="/accounts/register/" class="btn btn-sm btn-primary">Регистрация</a>
+                {% endif %}
+
+                <!-- Корзина -->
+                <a href="/cart/" class="btn btn-sm btn-warning position-relative">
+                    <i class="bi bi-cart me-1"></i> Корзина
+                    {% if cart_count %}
+                        <span class="cart-badge">{{ cart_count }}</span>
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>

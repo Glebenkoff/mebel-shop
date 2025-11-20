@@ -1,0 +1,679 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MebelShop - Премиальная мебель и техника</title>
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* === УНИКАЛЬНАЯ ЦВЕТОВАЯ СХЕМА === */
+        :root {
+            --primary: #2A5C8D;
+            --secondary: #E8B4A9;
+            --accent: #5D8A6F;
+            --dark: #1A2B3C;
+            --light: #F8F9FA;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* === НАВИГАЦИЯ С АНИМАЦИЕЙ === */
+        .navbar {
+            background: rgba(42, 92, 141, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem !important;
+            background: linear-gradient(45deg, var(--secondary), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .navbar-brand::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        .navbar-brand:hover::after {
+            width: 100%;
+        }
+
+        .nav-link {
+            position: relative;
+            margin: 0 5px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::before {
+            width: 80%;
+        }
+
+        .nav-link:hover {
+            background: rgba(232, 180, 169, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* === КАРТОЧКИ С 3D ЭФФЕКТОМ === */
+        .feature-card {
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 8px 32px rgba(31, 38, 135, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 
+                0 20px 40px rgba(31, 38, 135, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.8);
+        }
+
+        /* === ГЕРОЙ СЕКЦИЯ С ПАРАЛЛАКСОМ === */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 150px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,1000 1000,0 1000,1000"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0px) rotate(360deg); }
+        }
+
+        /* === ИКОНКИ С АНИМАЦИЕЙ === */
+        .nav-link i {
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .nav-link:hover i {
+            transform: scale(1.2);
+            color: var(--secondary) !important;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        }
+
+        /* === КНОПКИ С ГРАДИЕНТОМ === */
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(42, 92, 141, 0.3);
+        }
+
+        /* === ФУТЕР С СЕТКОЙ === */
+        footer {
+            background: linear-gradient(135deg, var(--dark) 0%, #000 100%) !important;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        /* === АНИМАЦИЯ ПОЯВЛЕНИЯ === */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* === ПАРАЛЛАКС ЭФФЕКТ ДЛЯ КАРТИНОК === */
+        .category-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .category-card img {
+            transition: transform 0.5s ease;
+        }
+
+        .category-card:hover img {
+            transform: scale(1.1) rotateX(5deg) rotateY(5deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="/">
+                <i class="fas fa-couch me-2"></i>MebelShop
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="/">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="/catalog/">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="/pages/about/">О нас</a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav">
+                    <!-- Поиск -->
+                    <li class="nav-item me-3">
+                        <form class="d-flex" action="/catalog/search/" method="get">
+                            <input class="form-control" type="search" name="q" placeholder="Найти диван, кровать..." style="min-width: 250px;">
+                            <button class="btn btn-primary ms-2" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </li>
+
+                    {% if user.is_authenticated %}
+                    <!-- Действия для залогиненных -->
+                    <li class="nav-item me-3">
+                        <a class="nav-link position-relative" href="/catalog/comparison/" title="Сравнение">
+                            <i class="fas fa-balance-scale"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge bg-danger comparison-counter" id="comparisonCounter">
+                                0
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item me-3">
+                        <a class="nav-link position-relative" href="/catalog/wishlist/" title="Избранное">
+                            <i class="fas fa-heart"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge bg-danger wishlist-counter" id="wishlistCounter">
+                                0
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item me-3">
+                        <a class="nav-link position-relative" href="/cart/" title="Корзина">
+                                <i class="fas fa-shopping-cart"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge bg-danger cart-counter" id="cartCounter">
+                                0
+                            </span>
+                        </a>
+                    </li>
+
+                    <!-- Меню пользователя -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-1"></i>{{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/accounts/profile/">📊 Мой профиль</a></li>
+                            <li><a class="dropdown-item" href="/catalog/wishlist/">❤️ Избранное</a></li>
+                            <li><a class="dropdown-item" href="/catalog/comparison/">⚖️ Сравнение</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="/accounts/logout/">🚪 Выйти</a></li>
+                        </ul>
+                    </li>
+                    
+                    {% else %}
+                    <!-- Для гостей -->
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light me-2" href="/accounts/login/">Войти</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary" href="/accounts/register/">Регистрация</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Уведомления -->
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Основной контент -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Футер -->
+    <footer class="bg-dark text-light mt-5 py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4 class="fw-bold"><i class="fas fa-couch me-2"></i>MebelShop</h4>
+                    <p>Создаем уют в вашем доме с 2010 года. Более 10 000 довольных клиентов!</p>
+                    <div class="social-links">
+                        <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-6 mb-4">
+                    <h6>Магазин</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/catalog/" class="text-light-50">Каталог</a></li>
+                        <li><a href="#" class="text-light-50">Акции</a></li>
+                        <li><a href="#" class="text-light-50">Новинки</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-6 mb-4">
+                    <h6>Помощь</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light-50">Доставка</a></li>
+                        <li><a href="#" class="text-light-50">Оплата</a></li>
+                        <li><a href="#" class="text-light-50">Гарантия</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h6>Контакты</h6>
+                    <p><i class="fas fa-phone me-2"></i>+7 (999) 123-45-67</p>
+                    <p><i class="fas fa-envelope me-2"></i>info@mebelshop.ru</p>
+                    <p><i class="fas fa-clock me-2"></i>Ежедневно 9:00-21:00</p>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2024 MebelShop. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ОБЪЕДИНЕННЫЙ СКРИПТ - счетчики + анимации + AJAX корзина + избранное + сравнение
+document.addEventListener('DOMContentLoaded', function() {
+    // === СЧЕТЧИКИ ===
+    updateAllCounters();
+
+    // === AJAX КОРЗИНА ===
+    async function addToCart(productId) {
+        try {
+            const csrfToken = getCSRFToken();
+            const response = await fetch(`/cart/add/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Сохраняем в localStorage
+                localStorage.setItem('cartCount', data.cart_count);
+                
+                // Показываем уведомление
+                showNotification(data.message, 'success');
+                
+                // Обновляем все счетчики
+                updateAllCounters();
+                
+            } else {
+                showNotification(data.error, 'error');
+            }
+        } catch (error) {
+            showNotification('Ошибка соединения', 'error');
+        }
+    }
+
+    // === AJAX ИЗБРАННОЕ ===
+    async function toggleWishlist(productId) {
+        try {
+            const csrfToken = getCSRFToken();
+            const response = await fetch(`/catalog/ajax/wishlist/toggle/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Сохраняем в localStorage
+                localStorage.setItem('wishlistCount', data.wishlist_count);
+                
+                showNotification(data.message, 'success');
+                updateAllCounters();
+                
+            } else {
+                showNotification(data.error, 'error');
+            }
+        } catch (error) {
+            showNotification('Ошибка соединения', 'error');
+        }
+    }
+
+    // === AJAX СРАВНЕНИЕ ===
+    async function toggleComparison(productId) {
+        try {
+            const csrfToken = getCSRFToken();
+            const response = await fetch(`/catalog/ajax/comparison/toggle/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Сохраняем в localStorage
+                localStorage.setItem('comparisonCount', data.comparison_count);
+                
+                showNotification(data.message, 'success');
+                updateAllCounters();
+                
+            } else {
+                showNotification(data.error, 'error');
+            }
+        } catch (error) {
+            showNotification('Ошибка соединения', 'error');
+        }
+    }
+
+    // Получение CSRF токена - ИСПРАВЛЕННАЯ ВЕРСИЯ
+    function getCSRFToken() {
+        // 1. Ищем в meta тегах
+        const metaToken = document.querySelector('meta[name="csrf-token"]');
+        if (metaToken) {
+            return metaToken.getAttribute('content');
+        }
+        
+        // 2. Ищем в cookie
+        const cookieValue = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('csrftoken='))
+            ?.split('=')[1];
+        
+        if (cookieValue) {
+            return cookieValue;
+        }
+        
+        // 3. Ищем в hidden input
+        const hiddenToken = document.querySelector('input[name="csrfmiddlewaretoken"]');
+        if (hiddenToken) {
+            return hiddenToken.value;
+        }
+        
+        console.error('CSRF token not found');
+        return '';
+    }
+
+    // Функция уведомлений
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+        notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+        notification.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 3000);
+    }
+
+    // Функция синхронизации всех счетчиков
+    function updateAllCounters() {
+        const cartCount = localStorage.getItem('cartCount') || 0;
+        const comparisonCount = localStorage.getItem('comparisonCount') || 0;
+        const wishlistCount = localStorage.getItem('wishlistCount') || 0;
+
+        // Обновляем счетчики в навигации
+        const cartCounter = document.getElementById('cartCounter');
+        const comparisonCounter = document.getElementById('comparisonCounter');
+        const wishlistCounter = document.getElementById('wishlistCounter');
+
+        if (cartCounter) {
+            cartCounter.textContent = cartCount;
+            cartCounter.style.display = cartCount > 0 ? 'block' : 'none';
+        }
+        if (comparisonCounter) {
+            comparisonCounter.textContent = comparisonCount;
+            comparisonCounter.style.display = comparisonCount > 0 ? 'block' : 'none';
+        }
+        if (wishlistCounter) {
+            wishlistCounter.textContent = wishlistCount;
+            wishlistCounter.style.display = wishlistCount > 0 ? 'block' : 'none';
+        }
+    }
+
+    // === ПЕРЕХВАТ ССЫЛОК КОРЗИНЫ ===
+    document.addEventListener('click', function(e) {
+        let target = e.target;
+        
+        // Если кликнули прямо на ссылку корзины
+        if (target.tagName === 'A' && target.href && target.href.includes('/cart/add/')) {
+            e.preventDefault();
+            const match = target.href.match(/\/cart\/add\/(\d+)\//);
+            if (match) {
+                addToCart(match[1]);
+            }
+        }
+        
+        // Если кликнули на текст внутри ссылки корзины
+        if (target.parentElement && target.parentElement.tagName === 'A' && 
+            target.parentElement.href && target.parentElement.href.includes('/cart/add/')) {
+            e.preventDefault();
+            const match = target.parentElement.href.match(/\/cart\/add\/(\d+)\//);
+            if (match) {
+                addToCart(match[1]);
+            }
+        }
+    });
+
+    // === ПЕРЕХВАТ ССЫЛОК ИЗБРАННОГО ===
+    document.addEventListener('click', function(e) {
+        let target = e.target;
+        
+        // Если кликнули на ссылку избранного
+        if (target.tagName === 'A' && target.href && target.href.includes('/wishlist/toggle/')) {
+            e.preventDefault();
+            const match = target.href.match(/\/wishlist\/toggle\/(\d+)\//);
+            if (match) {
+                toggleWishlist(match[1]);
+            }
+        }
+        
+        // Если кликнули на текст внутри ссылки избранного
+        if (target.parentElement && target.parentElement.tagName === 'A' && 
+            target.parentElement.href && target.parentElement.href.includes('/wishlist/toggle/')) {
+            e.preventDefault();
+            const match = target.parentElement.href.match(/\/wishlist\/toggle\/(\d+)\//);
+            if (match) {
+                toggleWishlist(match[1]);
+            }
+        }
+    });
+
+    // === ПЕРЕХВАТ ССЫЛОК СРАВНЕНИЯ ===
+    document.addEventListener('click', function(e) {
+        let target = e.target;
+        
+        // Если кликнули на ссылку сравнения
+        if (target.tagName === 'A' && target.href && target.href.includes('/comparison/toggle/')) {
+            e.preventDefault();
+            const match = target.href.match(/\/comparison\/toggle\/(\d+)\//);
+            if (match) {
+                toggleComparison(match[1]);
+            }
+        }
+        
+        // Если кликнули на текст внутри ссылки сравнения
+        if (target.parentElement && target.parentElement.tagName === 'A' && 
+            target.parentElement.href && target.parentElement.href.includes('/comparison/toggle/')) {
+            e.preventDefault();
+            const match = target.parentElement.href.match(/\/comparison\/toggle\/(\d+)\//);
+            if (match) {
+                toggleComparison(match[1]);
+            }
+        }
+    });
+
+    // Инициализация обработчиков кнопок
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.dataset.productId;
+            addToCart(productId);
+        });
+    });
+
+    document.querySelectorAll('.wishlist-toggle-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.dataset.productId;
+            toggleWishlist(productId);
+        });
+    });
+
+    document.querySelectorAll('.comparison-toggle-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.dataset.productId;
+            toggleComparison(productId);
+        });
+    });
+
+    // === АНИМАЦИИ ===
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationDelay = (Math.random() * 0.5) + 's';
+                entry.target.classList.add('fade-in-up');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.feature-card, .category-card, .hero-section h1').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Параллакс эффект
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector('.hero-section');
+        if (hero) {
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        }
+    });
+});
+</script>
+</body>
+</html>

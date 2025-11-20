@@ -1,0 +1,6 @@
+ÿþ# >102LB5 2 INSTALLED_APPS
+INSTALLED_APPS = [
+    ...
+    'appliances',
+    ...
+]

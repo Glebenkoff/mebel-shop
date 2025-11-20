@@ -1,0 +1,33 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Категории товаров{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Категории товаров</h1>
+    
+    <div class="row">
+        {% for category in categories %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ category.name }}</h5>
+                    <p class="card-text">{{ category.description|default:"Описание категории" }}</p>
+                    <a href="{{ category.get_absolute_url }}" class="btn btn-primary">
+                        Смотреть товары ({{ category.products.count }})
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                <h4>Категории не найдены</h4>
+                <p>Пока нет категорий товаров.</p>
+                <a href="/admin/catalog/category/add/" class="btn btn-primary">Добавить категорию в админке</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Заказ #{{ order.id }}{% endblock %}
+
+{% block content %}
+<h1>Заказ #{{ order.id }}</h1>
+<p><strong>Статус:</strong> {{ order.get_status_display }}</p>
+<p><strong>Дата:</strong> {{ order.created_at }}</p>
+<p><strong>Адрес:</strong> {{ order.address|default:"Не указан" }}</p>
+
+<h3>Товары:</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Товар</th>
+            <th>Кол-во</th>
+            <th>Цена</th>
+            <th>Сумма</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order.items.all %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.price }} ₽</td>
+            <td>{{ item.price|floatformat:2 }} ₽</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p><strong>Итого:</strong> {{ order.total_price }} ₽</p>
+{% endblock %}

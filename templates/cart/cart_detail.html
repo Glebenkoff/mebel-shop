@@ -1,0 +1,82 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+<div style="display: none;">
+    <span id="cartCounter">0</span>
+</div>
+<div class="container mt-4">
+    <h1>Корзина покупок</h1>
+    
+    {% if cart and cart.items.all %}
+    <div class="row">
+        <div class="col-md-8">
+            {% for item in cart.items.all %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h5 class="card-title">{{ item.product.name }}</h5>
+                            <p class="card-text text-muted">{{ item.product.category.name }}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="card-text">{{ item.quantity }} шт.</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="card-text fw-bold">{{ item.product.price }} ₽</p>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="{% url 'cart_remove' item.product.id %}" 
+                               class="btn btn-danger btn-sm">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Итого</h5>
+                    <p class="card-text">
+                        Товаров: <strong>{{ cart.get_items_count }}</strong><br>
+                        Сумма: <strong class="text-success">{{ cart.get_total_price }} ₽</strong>
+                    </p>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary btn-lg">Оформить заказ</button>
+                        <a href="{% url 'product_list' %}" class="btn btn-outline-secondary">
+                            Продолжить покупки
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        <h4>Корзина пуста</h4>
+        <p>Добавьте товары из каталога чтобы продолжить.</p>
+        <a href="{% url 'product_list' %}" class="btn btn-primary">Перейти в каталог</a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+// ПРОСТОЙ СКРИПТ БЕЗ ПЕРЕЗАГРУЗКИ
+document.addEventListener('DOMContentLoaded', function() {
+    const totalItems = {{ cart.get_total_quantity }};
+    console.log('Cart items:', totalItems);
+    localStorage.setItem('cartCount', totalItems);
+    
+    // Обновляем счетчик в навигации
+    const counter = document.getElementById('cartCounter');
+    if (counter) {
+        if (totalItems > 0) {
+            counter.textContent = totalItems;
+        } else {
+            counter.textContent = '0';
+        }
+    }
+});
+</script>
+{% endblock %}

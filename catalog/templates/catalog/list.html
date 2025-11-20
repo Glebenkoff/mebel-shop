@@ -1,0 +1,15 @@
+<!-- catalog/templates/catalog/list.html -->
+<h1>Категории</h1>
+<ul>
+{% for cat in categories %}
+  <li><a href="{% url 'category_detail' cat.category %}">{{ cat.name }}</a>
+    {% if cat.children %}
+      <ul>
+        {% for child in cat.children %}
+          <li><a href="{% url 'category_detail' child.category %}">{{ child.name }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </li>
+{% endfor %}
+</ul>

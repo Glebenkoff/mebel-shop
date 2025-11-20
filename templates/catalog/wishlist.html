@@ -1,0 +1,118 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>❤️ Мое избранное</h1>
+    
+    {% if products %}
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text text-success fw-bold">{{ product.price }} ₽</p>
+                    <p class="card-text">
+                        <small class="text-muted">{{ product.category.name }}</small>
+                    </p>
+                    
+                    <div class="mt-auto">
+                        <div class="d-grid gap-2">
+                            <a href="{{ product.get_absolute_url }}" class="btn btn-outline-primary">Подробнее</a>
+                            <a href="{% url 'wishlist_toggle' product.id %}" class="btn btn-outline-danger">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        <h4>Избранное пусто</h4>
+        <p>Добавляйте товары в избранное чтобы не потерять!</p>
+        <a href="{% url 'product_list' %}" class="btn btn-primary">Перейти в каталог</a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+console.log('=== СКРИПТ WISHLIST ЗАГРУЖЕН ===');
+
+// Ждем полной загрузки страницы
+window.addEventListener('load', function() {
+    console.log('=== PAGE LOADED ===');
+    setupWishlistHandlers();
+});
+
+// Или если DOM уже загружен
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupWishlistHandlers);
+} else {
+    setupWishlistHandlers();
+}
+
+function setupWishlistHandlers() {
+    console.log('=== SETUP WISHLIST HANDLERS ===');
+    
+    // Ищем ссылки с задержкой
+    setTimeout(() => {
+        const links = document.querySelectorAll('a[href*="/wishlist/toggle/"]');
+        console.log('Найдено ссылок после таймаута:', links.length);
+        
+        links.forEach(link => {
+            console.log('Добавляем обработчик для:', link.href);
+            link.addEventListener('click', handleWishlistClick);
+        });
+    }, 100);
+}
+
+function handleWishlistClick(e) {
+    console.log('=== КЛИК ПО ССЫЛКЕ ===', this.href);
+    e.preventDefault();
+    
+    fetch(this.href, {
+        headers: {'X-Requested-With': 'XMLHttpRequest'}
+    })
+    .then(r => r.json())
+    .then(data => {
+        console.log('AJAX ответ:', data);
+        
+        if (data.success && !data.added) {
+            const card = this.closest('.col-md-4');
+            console.log('Найдена карточка:', card);
+            
+            if (card) {
+                console.log('Удаляем карточку');
+                card.style.transition = 'opacity 0.3s';
+                card.style.opacity = '0';
+                setTimeout(() => {
+                    card.remove();
+                    console.log('Карточка удалена');
+                    
+                    document.querySelectorAll('.wishlist-count, #wishlistCounter').forEach(c => {
+                        c.textContent = data.wishlist_count;
+                    });
+                    
+                    if (!document.querySelector('.col-md-4')) {
+                        document.querySelector('.row').innerHTML = `
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <h4>Избранное пусто</h4>
+                                    <a href="/catalog/" class="btn btn-primary">В каталог</a>
+                                </div>
+                            </div>`;
+                    }
+                }, 300);
+            } else {
+                console.log('Карточка не найдена!');
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        window.location.href = this.href;
+    });
+}
+</script>
+{% endblock %}

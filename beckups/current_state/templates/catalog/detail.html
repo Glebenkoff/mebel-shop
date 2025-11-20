@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        {% if product.image_url %}
+            <img src="{{ product.image_url }}" class="img-fluid" alt="{{ product.name }}">
+        {% else %}
+            <div class="bg-light text-center p-4">Нет изображения</div>
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <h1>{{ product.name }}</h1>
+        <p><strong>Цена:</strong> {{ product.price }} ₽</p>
+        <p><strong>Наличие:</strong> 
+            {% if product.availability %}
+                Есть в наличии
+            {% else %}
+                Нет в наличии
+            {% endif %}
+        </p>
+        {% if product.description %}
+            <h4>Описание:</h4>
+            <div class="product-description">
+                <p id="description-short" class="description-preview">
+                    {{ product.description|safe|truncatewords:30 }}
+                </p>
+                <div id="description-full" class="description-full" style="display: none;">
+                    {{ product.description|safe }}
+                </div>
+                <button id="toggle-description" class="btn btn-sm btn-link p-0" type="button">
+                    Показать {% if product.description|length > 200 %}всё{% else %}меньше{% endif %}
+                </button>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const shortDesc = document.getElementById('description-short');
+    const fullDesc = document.getElementById('description-full');
+    const button = document.getElementById('toggle-description');
+
+    // Если полное описание не отличается от краткого — скрываем кнопку
+    if (!fullDesc || !button) return;
+
+    button.addEventListener('click', function () {
+        if (shortDesc.style.display === 'none') {
+            shortDesc.style.display = 'block';
+            fullDesc.style.display = 'none';
+            button.textContent = 'Показать всё';
+        } else {
+            shortDesk.style.display = 'none';
+            fullDesk.style.display = 'block';
+            button.textContent = 'Скрыть';
+        }
+    });
+});
+</script>
+
+<style>
+.description-preview {
+    line-height: 1.5;
+    max-height: 4.5em; /* ≈ 3 строки */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+.description-full {
+    line-height: 1.5;
+}
+.btn-link {
+    font-size: 0.9rem;
+    color: #0d6efd;
+    padding: 0;
+}
+.btn-link:hover {
+    color: #0a58ca;
+    text-decoration: underline;
+}
+</style>
+{% endblock %}

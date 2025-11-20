@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ product.name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .product-detail {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .product-header {
+            display: flex;
+            gap: 30px;
+            padding: 30px;
+        }
+        .product-images {
+            flex: 1;
+            max-width: 500px;
+        }
+        .main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: contain;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .thumbnails {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+        }
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .thumbnail.active {
+            border-color: #007bff;
+        }
+        .product-info {
+            flex: 1;
+        }
+        .product-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .product-price {
+            font-size: 28px;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .product-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .btn-primary {
+            background: #06ac1c;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #058a17;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .cart-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        .cart-notification.show {
+            transform: translateX(0);
+        }
+        @media (max-width: 768px) {
+            .product-header {
+                flex-direction: column;
+            }
+            .product-images {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Исправленная ссылка -->
+    <a href="/catalog/" class="back-link">← Назад в каталог</a>
+    
+    <div class="product-detail">
+        <div class="product-header">
+            <div class="product-images">
+                {% if images %}
+                    <img src="{{ images.0.image.url }}" alt="{{ product.name }}" class="main-image" id="mainImage">
+                    <div class="thumbnails">
+                        {% for image in images %}
+                            <img src="{{ image.image.url }}" 
+                                 alt="{{ product.name }}"
+                                 class="thumbnail {% if forloop.first %}active{% endif %}"
+                                 data-image="{{ image.image.url }}">
+                        {% endfor %}
+                    </div>
+                {% elif product.main_image %}
+                    <img src="{{ product.main_image.image.url }}" alt="{{ product.name }}" class="main-image">
+                {% else %}
+                    <div class="main-image" style="display: flex; align-items: center; justify-content: center; color: #666;">
+                        🖼️ Нет изображения
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="product-info">
+                <h1 class="product-name">{{ product.name }}</h1>
+                <div class="product-price">{{ product.get_price_display }}</div>
+                
+                {% if product.availability %}
+                    <span style="background: #28a745; color: white; padding: 8px 12px; border-radius: 4px; display: inline-block; margin-bottom: 15px;">
+                        ✓ В наличии
+                    </span>
+                {% else %}
+                    <span style="background: #dc3545; color: white; padding: 8px 12px; border-radius: 4px; display: inline-block; margin-bottom: 15px;">
+                        ✗ Нет в наличии
+                    </span>
+                {% endif %}
+                
+                {% if product.description %}
+                    <div class="product-description">
+                        {{ product.description }}
+                    </div>
+                {% endif %}
+                
+                <div class="quantity-selector">
+                    <label>Количество:</label>
+                    <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                    <input type="number" class="quantity-input" id="quantity" value="1" min="1" max="10">
+                    <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                </div>
+                
+                <div class="product-actions">
+                    <button class="btn btn-primary" onclick="addToCart()">
+                        🛒 Добавить в корзину
+                    </button>
+                </div>
+                
+                {% if product.properties %}
+                    <div class="product-specs">
+                        <h3>Характеристики:</h3>
+                        <ul>
+                            {% for key, value in product.properties.items %}
+                                <li><strong>{{ key }}:</strong> {{ value }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="cart-notification" id="cartNotification">
+        Товар добавлен в корзину!
+    </div>
+
+    <script>
+        // Смена изображений по клику на миниатюры
+        document.querySelectorAll('.thumbnail').forEach(thumb => {
+            thumb.addEventListener('click', function() {
+                const mainImage = document.getElementById('mainImage');
+                if (mainImage) {
+                    mainImage.src = this.dataset.image;
+                    
+                    // Убираем активный класс у всех миниатюр
+                    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                    // Добавляем активный класс текущей миниатюре
+                    this.classList.add('active');
+                }
+            });
+        });
+        
+        // Изменение количества
+        function changeQuantity(change) {
+            const input = document.getElementById('quantity');
+            let quantity = parseInt(input.value) + change;
+            if (quantity < 1) quantity = 1;
+            if (quantity > 10) quantity = 10;
+            input.value = quantity;
+        }
+        
+        // Добавление в корзину
+        function addToCart() {
+            const quantity = document.getElementById('quantity').value;
+            const productKey = '{{ product.product_key }}';
+            
+            fetch('/catalog/add-to-cart/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    product_key: productKey,
+                    quantity: parseInt(quantity)
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message);
+                } else {
+                    alert('Ошибка: ' + data.message);
+                }
+            })
+            .catch(error => {
+                alert('Ошибка сети: ' + error);
+            });
+        }
+        
+        // Показ уведомления
+        function showNotification(message) {
+            const notification = document.getElementById('cartNotification');
+            if (notification) {
+                notification.textContent = message;
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+        }
+        
+        // Вспомогательная функция для получения CSRF токена
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>

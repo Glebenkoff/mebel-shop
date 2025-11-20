@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}MebelShop - Премиальная мебель для вашего дома{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-primary text-white py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;">
+    <div class="container">
+        <div class="row align-items-center py-5">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Создайте уют в вашем доме</h1>
+                <p class="lead mb-4">Более 1000 моделей мебели от ведущих производителей</p>
+                <a href="{% url 'product_list' %}" class="btn btn-light btn-lg">🛋️ В каталог</a>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div style="height: 300px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <span class="text-white">🏠 Современная мебель</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features -->
+<div class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <h2 class="fw-bold">Почему выбирают нас</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h3 class="text-primary">🚚</h3>
+                        <h5>Бесплатная доставка</h5>
+                        <p>По Москве и области</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h3 class="text-primary">🔧</h3>
+                        <h5>Профессиональная сборка</h5>
+                        <p>Качественно и быстро</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h3 class="text-primary">🛡️</h3>
+                        <h5>Гарантия 2 года</h5>
+                        <p>На всю продукцию</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Categories -->
+<div class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4 fw-bold">Популярные категории</h2>
+        <div class="row">
+            {% for category in categories %}
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ category.name }}</h5>
+                        <a href="{% url 'product_list' %}" class="btn btn-primary">Смотреть товары</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Products -->
+<div class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4 fw-bold">Новые товары</h2>
+        <div class="row">
+            {% for product in products %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="text-muted">{{ product.description|truncatewords:10 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="h5 text-primary fw-bold">{{ product.price }} ₽</span>
+                            <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

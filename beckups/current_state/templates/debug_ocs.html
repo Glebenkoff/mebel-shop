@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Отладка OCS API{% endblock %}
+
+{% block content %}
+<h1>Отладка OCS API</h1>
+
+<h2>Товары категории TV</h2>
+<div class="row">
+    {% for item in products %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                {% if item.product.image.url %}
+                    <img src="{{ item.product.image.url }}" class="card-img-top" alt="{{ item.product.itemNameRus }}">
+                {% else %}
+                    <div class="bg-light text-center p-4">Нет изображения</div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.product.itemNameRus }}</h5>
+                    <p class="card-text">Цена: {{ item.price.order.value }} ₽</p>
+                    <p class="text-muted">
+                        {% if item.isAvailableForOrder %}
+                            В наличии
+                        {% else %}
+                            Нет в наличии
+                        {% endif %}
+                    </p>
+                    <pre style="font-size: 0.8rem; background: #f8f9fa; padding: 10px; overflow-x: auto;">
+{{ item|safe }}
+                    </pre>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>Товары не найдены.</p>
+    {% endfor %}
+</div>
+{% endblock %}

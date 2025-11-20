@@ -1,0 +1,231 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Главная</a></li>
+            <li class="breadcrumb-item"><a href="/catalog/">Каталог</a></li>
+            <li class="breadcrumb-item active">{{ product.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div style="height: 300px; background: #f8f9fa; display: flex; align-items: center; justify-content: center;">
+                        <span class="text-muted">Изображение товара</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <h1>{{ product.name }}</h1>
+            <p class="text-muted">Категория: {{ product.category.name }}</p>
+            
+            <div class="mb-3">
+                <h3 class="text-success">{{ product.price }} ₽</h3>
+            </div>
+
+            {% if product.available %}
+            <div class="mb-3">
+                <span class="badge bg-success">В наличии</span>
+            </div>
+            
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary btn-lg add-to-cart-btn" data-product-id="{{ product.id }}">
+                    <i class="fas fa-shopping-cart me-2"></i>Добавить в корзину
+                </button>
+                {% if user.is_authenticated %}
+                <div class="btn-group w-100">
+                    <button class="btn btn-outline-danger wishlist-toggle-btn" data-product-id="{{ product.id }}">
+                        <i class="fas fa-heart"></i> В избранное
+                    </button>
+                    <button class="btn btn-outline-info comparison-toggle-btn" data-product-id="{{ product.id }}">
+                        <i class="fas fa-balance-scale"></i> Сравнить
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="alert alert-warning">Товар временно отсутствует</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Описание товара</h5>
+                    <p class="card-text">
+                        {% if product.description %}
+                            {{ product.description }}
+                        {% else %}
+                            Описание товара скоро будет добавлено.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Блок отзывов -->
+    <div class="reviews-section mt-5">
+        <h4>Отзывы о товаре</h4>
+        
+        <!-- Форма отзыва -->
+        {% if user.is_authenticated %}
+        <div class="review-form card mb-4">
+            <div class="card-body">
+                <h5>Оставить отзыв</h5>
+                <form id="reviewForm">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Ваша оценка:</label>
+                        <div class="rating-stars">
+                            <input type="radio" id="star5" name="rating" value="5">
+                            <label for="star5">★</label>
+                            <input type="radio" id="star4" name="rating" value="4">
+                            <label for="star4">★</label>
+                            <input type="radio" id="star3" name="rating" value="3">
+                            <label for="star3">★</label>
+                            <input type="radio" id="star2" name="rating" value="2">
+                            <label for="star2">★</label>
+                            <input type="radio" id="star1" name="rating" value="1">
+                            <label for="star1">★</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <textarea name="text" class="form-control" placeholder="Поделитесь вашим опытом использования товара..." rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Отправить отзыв</button>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <a href="{% url 'login' %}?next={{ request.path }}" class="alert-link">Войдите</a>, чтобы оставить отзыв
+        </div>
+        {% endif %}
+        
+        <!-- Список отзывов -->
+        <div id="reviewsList">
+            {% for review in product.reviews.all %}  <!-- ← ВАЖНО: .all() -->
+                {% if review.is_approved %}
+                <div class="review-card card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h6 class="card-title">{{ review.user.username }}</h6>
+                            <div class="rating text-warning">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
+                                {% endfor %}
+                                <span class="text-muted ms-1">({{ review.rating }}/5)</span>
+                            </div>
+                        </div>
+                        <p class="card-text mt-2">{{ review.text }}</p>
+                        <small class="text-muted">{{ review.created_at|date:"d.m.Y H:i" }}</small>
+                    </div>
+                </div>
+                {% endif %}
+            {% empty %}
+            <div class="text-center py-4">
+                <p class="text-muted">Пока нет отзывов. Будьте первым!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Стили для звезд рейтинга -->
+<style>
+.rating-stars {
+    direction: rtl;
+    display: inline-block;
+}
+
+.rating-stars input[type="radio"] {
+    display: none;
+}
+
+.rating-stars label {
+    font-size: 24px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.rating-stars label:hover,
+.rating-stars label:hover ~ label,
+.rating-stars input[type="radio"]:checked ~ label {
+    color: #ffc107;
+}
+</style>
+
+<!-- JavaScript для AJAX отправки отзывов -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const reviewForm = document.getElementById('reviewForm');
+    
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const productId = window.location.pathname.split('/')[2]; // Извлекаем ID из URL
+            
+            try {
+                const response = await fetch(`/reviews/add/${productId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Показываем уведомление
+                    showNotification(data.message, 'success');
+                    
+                    // Очищаем форму
+                    reviewForm.reset();
+                    
+                    // Обновляем список отзывов (можно добавить динамическое обновление)
+                    setTimeout(() => {
+                        location.reload(); // Временное решение - перезагрузка
+                    }, 1000);
+                    
+                } else {
+                    showNotification(data.errors || data.error, 'error');
+                }
+            } catch (error) {
+                showNotification('Ошибка соединения', 'error');
+            }
+        });
+    }
+});
+
+function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+    notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    notification.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 3000);
+}
+</script>
+{% endblock %}

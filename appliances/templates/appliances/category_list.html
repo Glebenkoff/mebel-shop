@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Техника - Категории</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .category { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .category h3 { margin-top: 0; }
+        .stats { color: #666; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <h1>Техника - Список категорий</h1>
+    
+    <div class="categories">
+        {% for category in categories %}
+        <div class="category">
+            <h3>{{ category.name }} ({{ category.code }})</h3>
+            <div class="stats">
+                <p><strong>Родительская категория:</strong> {% if category.parent %}{{ category.parent.name }}{% else %}---{% endif %}</p>
+                <p><strong>Дата создания:</strong> {{ category.created_at|date:"d.m.Y H:i" }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p>Категории не найдены.</p>
+        {% endfor %}
+    </div>
+
+    <p><a href="{% url 'appliances:appliance_list' %}">Вернуться к списку товаров</a></p>
+    <p><small>Всего категорий: {{ categories|length }}</small></p>
+</body>
+</html>

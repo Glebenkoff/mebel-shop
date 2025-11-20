@@ -1,0 +1,18 @@
+<!-- catalog/templates/catalog/category.html -->
+<h1>Товары в категории</h1>
+<a href="{% url 'catalog_list' %}">← Назад к категориям</a>
+
+{% for product in products %}
+  <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
+    <h3>{{ product.name }}</h3>
+    <p>Цена: {{ product.price }} ₽</p>
+    <p>Доступен: {% if product.available %}✅{% else %}❌{% endif %}</p>
+    <form method="post" action="{% url 'cart:add_to_cart' %}">
+      {% csrf_token %}
+      <input type="hidden" name="product_key" value="{{ product.product_key }}">
+      <button type="submit">Добавить в корзину</button>
+    </form>
+  </div>
+{% empty %}
+  <p>Нет товаров</p>
+{% endfor %}

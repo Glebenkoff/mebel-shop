@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Корзина — Мебельный магазин{% endblock %}
+
+{% block content %}
+    <h1>Ваша корзина</h1>
+
+    {% if cart.items %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th>Сумма</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart.items %}
+                    <tr>
+                        <td>
+                            <img src="{{ item.product.image.url }}" width="50" class="me-2">
+                            {{ item.product.name }}
+                        </td>
+                        <td>{{ item.price }} ₽</td>
+                        <td>
+                            <form method="post" action="{% url 'cart:update' item.product.id %}">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="99" class="form-control" style="max-width: 80px;">
+                                <button type="submit" class="btn btn-sm btn-outline-primary mt-1">Обновить</button>
+                            </form>
+                        </td>
+                        <td>{{ item.total_price }} ₽</td>
+                        <td>
+                            <a href="{% url 'cart:remove' item.product.id %}" class="btn btn-sm btn-outline-danger">❌</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <h4>Итого: {{ cart.total_price }} ₽</h4>
+            <a href="{% url 'orders:create_order' %}" class="btn btn-success">Оформить заказ</a>
+        </div>
+    {% else %}
+        <p>Ваша корзина пуста.</p>
+        <a href="{% url 'catalog:product_list' %}" class="btn btn-primary">Продолжить покупки</a>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Каталог - Мебельный магазин{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Каталог товаров</h1>
+    <div class="alert alert-info">
+        <p>Каталог находится в разработке. Скоро здесь появятся товары!</p>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Тестовый товар 1</h5>
+                    <p class="text-primary fw-bold">10 000 руб.</p>
+                    <button class="btn btn-primary add-to-cart" data-product-id="1">
+                        В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Тестовый товар 2</h5>
+                    <p class="text-primary fw-bold">15 000 руб.</p>
+                    <button class="btn btn-primary add-to-cart" data-product-id="2">
+                        В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Тестовый товар 3</h5>
+                    <p class="text-primary fw-bold">20 000 руб.</p>
+                    <button class="btn btn-primary add-to-cart" data-product-id="3">
+                        В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
